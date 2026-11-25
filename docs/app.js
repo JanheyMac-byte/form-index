@@ -1,35 +1,50 @@
 "use strict";
 
 const categories = {
-  visual: "视觉灵感",
-  graphic: "平面与品牌",
+  visual: "視覺靈感",
+  graphic: "平面與品牌",
   ux: "UI/UX",
-  web: "网页设计",
-  aesthetic: "审美网页",
-  type: "字体与排版",
+  web: "網頁設計",
+  aesthetic: "審美網頁",
+  type: "字體與排版",
   other: "其他"
 };
 
 const makeSite = ([id, name, url, category, description, mark]) => ({ id, name, url, category, description, mark });
 const featuredSites = [
-  ["pinterest","Pinterest","https://ca.pinterest.com/","visual","搜集图片参考，整理自己的灵感板。","P"],
-  ["museum","Museum Department","https://museumdepartment.com/","graphic","浏览当代平面设计与字体项目。","M"],
-  ["figma","Figma Community","https://www.figma.com/community","ux","查找 UI 套件、设计系统和插件。","F"],
-  ["mobbin","Mobbin","https://mobbin.com/","ux","参考真实产品的界面与用户流程。","M"],
-  ["awwwards","Awwwards","https://www.awwwards.com/","web","发现互动体验与网页设计案例。","A."],
-  ["siteinspire","Siteinspire","https://www.siteinspire.com/","web","按风格、类型和主题寻找网站参考。","Si"],
-  ["fonts","Fonts In Use","https://fontsinuse.com/","type","研究字体在真实作品中的用法与搭配。","Aa"],
-  ["arena","Are.na","https://www.are.na/","visual","通过主题频道探索图像、文本和研究素材。","A"],
-  ["behance","Behance","https://www.behance.net/","graphic","浏览品牌、平面和编辑设计项目。","Bē"]
+  ["pinterest","Pinterest","https://ca.pinterest.com/","visual","蒐集圖片參考，整理自己的靈感板。","P"],
+  ["museum","Museum Department","https://museumdepartment.com/","graphic","瀏覽當代平面設計與字體項目。","M"],
+  ["figma","Figma Community","https://www.figma.com/community","ux","查找 UI 套件、設計系統和插件。","F"],
+  ["mobbin","Mobbin","https://mobbin.com/","ux","參考真實產品的界面與用戶流程。","M"],
+  ["awwwards","Awwwards","https://www.awwwards.com/","web","發現互動體驗與網頁設計案例。","A."],
+  ["siteinspire","Siteinspire","https://www.siteinspire.com/","web","按風格、類型和主題尋找網站參考。","Si"],
+  ["fonts","Fonts In Use","https://fontsinuse.com/","type","研究字體在真實作品中的用法與搭配。","Aa"],
+  ["arena","Are.na","https://www.are.na/","visual","通過主題頻道探索圖像、文本和研究素材。","A"],
+  ["behance","Behance","https://www.behance.net/","graphic","瀏覽品牌、平面和編輯設計項目。","Bē"]
 ].map(makeSite);
 const aestheticSites = [
-  ["ordinary-people","Ordinary People","https://ordinarypeople.info/work","aesthetic","看韩国设计工作室如何用大胆排版、影像和动效呈现品牌项目。","OP"],
-  ["studio-dumbar","Studio Dumbar","https://studiodumbar.com/work","aesthetic","参考以动态字体、色彩和编排呈现视觉识别作品的项目索引。","SD"],
-  ["eames-institute","Eames Institute","https://www.eamesinstitute.org/collection/","aesthetic","参考设计档案的产品摄影、留白和藏品编排。","EI"],
-  ["koto","Koto","https://koto.com/","aesthetic","参考大字号排版、明快配色和品牌案例的图文节奏。","K"]
+  ["ordinary-people","Ordinary People","https://ordinarypeople.info/work","aesthetic","看韓國設計工作室如何用大膽排版、影像和動效呈現品牌項目。","OP"],
+  ["studio-dumbar","Studio Dumbar","https://studiodumbar.com/work","aesthetic","參考以動態字體、色彩和編排呈現視覺識別作品的項目索引。","SD"],
+  ["eames-institute","Eames Institute","https://www.eamesinstitute.org/collection/","aesthetic","參考設計檔案的產品攝影、留白和藏品編排。","EI"],
+  ["koto","Koto","https://koto.com/","aesthetic","參考大字號排版、明快配色和品牌案例的圖文節奏。","K"]
 ].map(makeSite);
 const seed = [...featuredSites, ...aestheticSites];
 const aestheticIds = new Set(aestheticSites.map(site => site.id));
+const legacyDescriptions = {
+  "pinterest": "搜集图片参考，整理自己的灵感板。",
+  "museum": "浏览当代平面设计与字体项目。",
+  "figma": "查找 UI 套件、设计系统和插件。",
+  "mobbin": "参考真实产品的界面与用户流程。",
+  "awwwards": "发现互动体验与网页设计案例。",
+  "siteinspire": "按风格、类型和主题寻找网站参考。",
+  "fonts": "研究字体在真实作品中的用法与搭配。",
+  "arena": "通过主题频道探索图像、文本和研究素材。",
+  "behance": "浏览品牌、平面和编辑设计项目。",
+  "ordinary-people": "看韩国设计工作室如何用大胆排版、影像和动效呈现品牌项目。",
+  "studio-dumbar": "参考以动态字体、色彩和编排呈现视觉识别作品的项目索引。",
+  "eames-institute": "参考设计档案的产品摄影、留白和藏品编排。",
+  "koto": "参考大字号排版、明快配色和品牌案例的图文节奏。"
+};
 
 const icons = {
   bookmark: '<path d="M6 5.5A1.5 1.5 0 0 1 7.5 4h9A1.5 1.5 0 0 1 18 5.5V21l-6-4-6 4z"/>',
@@ -70,11 +85,18 @@ function readState() {
   }
   const savedSites = Array.isArray(saved?.sites) ? saved.sites : null;
   const needsCatalogUpdate = savedSites && (saved.catalogVersion ?? 0) < catalogVersion;
-  let sites = savedSites ?? seed;
+  let sites = (savedSites ?? seed).map(site => {
+    const preset = seed.find(item => item.id === site.id);
+    if (preset && site.description === legacyDescriptions[site.id]) {
+      return { ...site, description: preset.description };
+    }
+    return site;
+  });
+  const needsDescriptionUpdate = savedSites && sites.some((site, index) => site !== savedSites[index]);
   if (needsCatalogUpdate) {
     const ids = new Set(savedSites.map(site => site.id));
     const urls = new Set(savedSites.map(site => normalizeUrl(site.url)));
-    sites = [...savedSites, ...aestheticSites.filter(site => !ids.has(site.id) && !urls.has(site.url))];
+    sites = [...sites, ...aestheticSites.filter(site => !ids.has(site.id) && !urls.has(site.url))];
   }
   const settings = {
     sites,
@@ -85,7 +107,7 @@ function readState() {
     figma: saved?.figma ?? "",
     catalogVersion
   };
-  if (needsCatalogUpdate) {
+  if (needsCatalogUpdate || needsDescriptionUpdate) {
     try {
       localStorage.setItem(storageKey, JSON.stringify(settings));
     } catch {
@@ -141,7 +163,7 @@ function update(next, message) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
   } catch {
-    message = "此浏览器无法保存，变更仅在当前页面生效。";
+    message = "此瀏覽器無法保存，變更僅在當前頁面生效。";
   }
   render();
   if (message) notify(message);
@@ -195,7 +217,7 @@ function previewCard(site) {
   return '<article class="preview-slide" data-preview-id="' + escapeText(site.id) +
     '" aria-label="' + escapeText(site.name) + '"><div class="preview-card-shell"><div class="preview-card">' +
     '<a class="preview-picture' + (site.id === "museum" ? " is-museum" : "") + '" ' + openLink(site) +
-    ' aria-label="打开 ' + escapeText(site.name) + '"><span class="preview-blockmark" aria-hidden="true">' + escapeText(mark) +
+    ' aria-label="打開 ' + escapeText(site.name) + '"><span class="preview-blockmark" aria-hidden="true">' + escapeText(mark) +
     '</span>' + image + '</a>' +
     '<div class="preview-body"><h3><a ' + openLink(site) + '>' + escapeText(site.name) + '</a></h3>' +
     '<p>' + escapeText(domain(site.url)) + ' · ' + categories[site.category] + '</p></div>' +
@@ -377,7 +399,7 @@ function paintOrbit() {
     }
     if (node.getAttribute("aria-current") !== String(active)) {
       node.setAttribute("aria-current", String(active));
-      node.querySelector(".preview-picture").setAttribute("aria-label", (active ? "打开 " : "移到星环前方 ") + site.name);
+      node.querySelector(".preview-picture").setAttribute("aria-label", (active ? "打開 " : "移到星環前方 ") + site.name);
     }
     node.toggleAttribute("data-orbit-hover", !active && site.id === hoverId);
     visible.add(site.id);
@@ -456,7 +478,7 @@ function updatePreviewControls() {
     return;
   }
   position.textContent = String(index + 1).padStart(2, "0") + " / " + String(previewQueue.length).padStart(2, "0");
-  position.setAttribute("aria-label", previewQueue[index].name + "，第 " + (index + 1) + " 张，共 " + previewQueue.length + " 张");
+  position.setAttribute("aria-label", previewQueue[index].name + "，第 " + (index + 1) + " 張，共 " + previewQueue.length + " 張");
 }
 
 function releaseQueuedPreviews() {
@@ -560,7 +582,7 @@ function resourceCard(site) {
 
 function orderedSites() {
   if (state.sort === "manual") return state.sites;
-  return [...state.sites].sort((left, right) => left.name.localeCompare(right.name, "zh-CN", { sensitivity: "base" }));
+  return [...state.sites].sort((left, right) => left.name.localeCompare(right.name, "zh-Hant", { sensitivity: "base" }));
 }
 
 function applyTheme() {
@@ -646,7 +668,7 @@ function render() {
   });
 
   if (page === "discover") renderPreview();
-  $("#resources-title").textContent = page === "discover" ? "全部资源" : "我的收藏";
+  $("#resources-title").textContent = page === "discover" ? "全部資源" : "我的收藏";
   $("#filters").innerHTML = Object.entries({ all: "全部", ...categories }).map(([key, label]) =>
     '<button type="button" data-category="' + key + '" class="filter" aria-pressed="' + (category === key) + '">' + label + '</button>'
   ).join("");
@@ -654,15 +676,15 @@ function render() {
   const shown = orderedSites().filter(site =>
     (page === "discover" || state.favorites.includes(site.id)) && (category === "all" || site.category === category)
   );
-  $("#resource-count").textContent = shown.length + " 个网站";
+  $("#resource-count").textContent = shown.length + " 個網站";
   const grid = $("#resource-grid");
   grid.dataset.view = state.view;
   if (shown.length) {
     grid.innerHTML = shown.map(resourceCard).join("");
   } else if (page === "saved" && category === "all") {
-    grid.innerHTML = '<div class="empty"><p>还没有收藏。点击网站旁的书签图标即可收藏。</p><button class="button outline" type="button" data-discover>去发现资源</button></div>';
+    grid.innerHTML = '<div class="empty"><p>還沒有收藏。點擊網站旁的書籤圖標即可收藏。</p><button class="button outline" type="button" data-discover>去發現資源</button></div>';
   } else {
-    grid.innerHTML = '<div class="empty"><p>这个分类暂时没有网站。</p></div>';
+    grid.innerHTML = '<div class="empty"><p>這個分類暫時沒有網站。</p></div>';
   }
 }
 
@@ -678,7 +700,7 @@ function showForm(site) {
   form.reset();
   $("#site-error").hidden = true;
   editingId = site?.id ?? null;
-  $("#site-dialog-title").textContent = site ? "编辑网站" : "添加网站";
+  $("#site-dialog-title").textContent = site ? "編輯網站" : "添加網站";
   form.elements.namedItem("category").value = site?.category ?? (category === "all" ? "visual" : category);
   for (const key of ["name", "url", "description", "preview"]) {
     form.elements.namedItem(key).value = site?.[key] ?? "";
@@ -695,7 +717,7 @@ function renderSearch() {
   $("#search-results").innerHTML = found.length ? found.map(site =>
     '<a class="search-result" ' + openLink(site) + '>' + avatar(site) + '<span>' + escapeText(site.name) +
     '<span class="resource-domain">' + escapeText(domain(site.url)) + '</span></span>' + icon("external") + '</a>'
-  ).join("") : '<p class="empty">没有匹配的网站。</p>';
+  ).join("") : '<p class="empty">沒有匹配的網站。</p>';
 }
 
 function showSearch() {
@@ -776,7 +798,7 @@ $$("[data-site-action]").forEach(button => button.addEventListener("click", () =
       break;
     case "remove":
       removingId = site.id;
-      $("#remove-copy").textContent = "要从灵感库移除「" + site.name + "」吗？";
+      $("#remove-copy").textContent = "要從靈感庫移除「" + site.name + "」嗎？";
       $("#remove-dialog").showModal();
       break;
   }
@@ -787,7 +809,7 @@ $("#remove-confirm").addEventListener("click", () => {
   update({
     sites: state.sites.filter(site => site.id !== removingId),
     favorites: state.favorites.filter(id => id !== removingId)
-  }, "已移除网站");
+  }, "已移除網站");
   removingId = null;
 });
 
@@ -797,17 +819,17 @@ $("#site-form").addEventListener("submit", event => {
   const name = fields.get("name").trim();
   const url = normalizeUrl(fields.get("url"));
   if (!name || !url) {
-    setError("#site-error", "请填写网站名称和有效网址，例如 example.com。");
+    setError("#site-error", "請填寫網站名稱和有效網址，例如 example.com。");
     return;
   }
   const previewInput = fields.get("preview").trim();
   const preview = previewInput ? normalizeUrl(previewInput) : "";
   if (previewInput && !preview) {
-    setError("#site-error", "请填写有效的预览图片网址。");
+    setError("#site-error", "請填寫有效的預覽圖片網址。");
     return;
   }
   if (state.sites.some(site => site.url === url && site.id !== editingId)) {
-    setError("#site-error", "这个网址已经在灵感库中。");
+    setError("#site-error", "這個網址已經在靈感庫中。");
     return;
   }
   const original = state.sites.find(site => site.id === editingId);
@@ -825,7 +847,7 @@ $("#site-form").addEventListener("submit", event => {
     page = "discover";
     category = "all";
   }
-  update({ sites }, original ? "已更新网站" : "已添加网站");
+  update({ sites }, original ? "已更新網站" : "已添加網站");
 });
 
 $("#settings-form").addEventListener("submit", event => {
@@ -834,7 +856,7 @@ $("#settings-form").addEventListener("submit", event => {
   const input = fields.get("figma").trim();
   const figma = input ? normalizeUrl(input) : "";
   if (input && (!figma || domain(figma) !== "figma.com")) {
-    setError("#settings-error", "请输入有效的 figma.com 链接。");
+    setError("#settings-error", "請輸入有效的 figma.com 鏈接。");
     return;
   }
   $("#settings-dialog").close();
@@ -986,5 +1008,5 @@ previewTrack.addEventListener("lostpointercapture", stopPreviewDrag);
 $$("[data-icon]").forEach(node => node.innerHTML = icon(node.dataset.icon));
 $("#site-category").innerHTML = Object.entries(categories).map(([key, label]) => '<option value="' + key + '">' + label + '</option>').join("");
 $("#shortcut").textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K";
-$(".add-launch").setAttribute("aria-label", "添加网站");
+$(".add-launch").setAttribute("aria-label", "添加網站");
 render();

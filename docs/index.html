@@ -1,38 +1,36 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-Hant" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="形迹是个人设计灵感导航，收录视觉、网页、UI/UX 和字体排版资源。">
+  <meta name="description" content="形跡是個人設計靈感導航，收錄視覺、網頁、UI/UX 和字體排版資源。">
   <meta name="theme-color" content="#ffffff">
-  <title>形迹 · 设计灵感库</title>
+  <title>形跡 · 設計靈感庫</title>
   <link rel="icon" href="./assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700;750&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/fonts/noto-serif-tc.css">
   <link rel="stylesheet" href="./styles.css">
   <script defer src="./app.js"></script>
   <script defer src="./sculpture.js"></script>
 </head>
 <body>
-  <a class="skip" href="#resources">跳转到资源</a>
+  <a class="skip" href="#resources">跳轉到資源</a>
   <header class="top">
     <div class="frame top-inner">
-      <a class="wordmark" href="#" aria-label="JANHEY 首页">
+      <a class="wordmark" href="#" aria-label="形跡 首頁">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-        <span>JANHEY<small>FORM INDEX</small></span>
+        <span>形跡<small>FORM INDEX</small></span>
       </a>
-      <nav class="main-nav glass" aria-label="主导航">
+      <nav class="main-nav glass" aria-label="主導航">
         <span class="nav-highlight" aria-hidden="true"><span class="nav-indicator"></span></span>
-        <button type="button" data-page="discover" aria-pressed="true">发现</button>
+        <button type="button" data-page="discover" aria-pressed="true">發現</button>
         <button type="button" data-page="saved" aria-pressed="false"><span data-icon="bookmark"></span>收藏</button>
       </nav>
       <div class="top-actions">
-        <button type="button" class="search-launch glass" id="search-launch" aria-label="搜索资源">
+        <button type="button" class="search-launch glass" id="search-launch" aria-label="搜索資源">
           <span data-icon="search"></span><span class="search-label">搜索</span><kbd id="shortcut">⌘ K</kbd>
         </button>
-        <button type="button" class="icon-btn glass settings-launch" id="settings-launch" aria-label="偏好设置" title="偏好设置"><span data-icon="settings"></span></button>
-        <button type="button" class="button primary add-launch" data-add><span data-icon="plus"></span><span>添加网站</span></button>
+        <button type="button" class="icon-btn glass settings-launch" id="settings-launch" aria-label="偏好設置" title="偏好設置"><span data-icon="settings"></span></button>
+        <button type="button" class="button primary add-launch" data-add><span data-icon="plus"></span><span>添加網站</span></button>
       </div>
     </div>
   </header>
@@ -44,26 +42,26 @@
         <section class="hero" id="sculpture-scene" aria-labelledby="page-title" data-model="./assets/porcelain-brain.bin.gz">
           <canvas class="hero-water" aria-hidden="true"></canvas>
           <div class="sculpture-shadow" aria-hidden="true"></div>
-          <img class="sculpture-poster" src="./assets/porcelain-brain-poster.png" width="840" height="768" alt="白瓷脑部雕塑，脑回呈流动曲面" draggable="false" fetchpriority="high">
+          <img class="sculpture-poster" src="./assets/porcelain-brain-poster.png" width="840" height="768" alt="白瓷腦部雕塑，腦回呈流動曲面" draggable="false" fetchpriority="high">
           <canvas class="sculpture-render" aria-hidden="true"></canvas>
           <div class="hero-content frame">
-            <h1 id="page-title">设计灵感库<span>.</span></h1>
-            <p>把值得回访的设计网站，收在一处。</p>
+            <h1 id="page-title">設計靈感庫<span>.</span></h1>
+            <p>把值得回訪的設計網站，收在一處。</p>
             <div class="hero-actions">
-              <a class="button hero-primary" href="#preview-section">浏览网站 <span data-icon="down"></span></a>
+              <a class="button hero-primary" href="#preview-section">瀏覽網站 <span data-icon="down"></span></a>
             </div>
           </div>
-          <p class="sculpture-hint"><span>在雕塑上停一会，藤蔓会发芽</span><span class="sculpture-touch-hint">按住雕塑，让藤蔓生长</span></p>
+          <p class="sculpture-hint"><span>在雕塑上停一會，藤蔓會發芽</span><span class="sculpture-touch-hint">按住雕塑，讓藤蔓生長</span></p>
           <section class="orbit-scene" id="website-orbit" aria-labelledby="preview-title" inert>
             <div class="orbit-atmosphere" aria-hidden="true"></div>
             <div class="orbit-ellipse orbit-ellipse-back" aria-hidden="true"></div>
             <div class="orbit-ellipse orbit-ellipse-front" aria-hidden="true"></div>
-            <h2 class="orbit-title" id="preview-title">网站预览</h2>
-            <div class="preview-track" id="preview-track" role="group" aria-label="网站星环，使用左右方向键切换" tabindex="0"></div>
-            <div class="preview-controls" aria-label="星环控制">
-              <button type="button" id="preview-prev" class="icon-btn glass" aria-label="上一张预览"><span data-icon="left"></span></button>
+            <h2 class="orbit-title" id="preview-title">網站預覽</h2>
+            <div class="preview-track" id="preview-track" role="group" aria-label="網站星環，使用左右方向鍵切換" tabindex="0"></div>
+            <div class="preview-controls" aria-label="星環控制">
+              <button type="button" id="preview-prev" class="icon-btn glass" aria-label="上一張預覽"><span data-icon="left"></span></button>
               <span id="preview-position" class="preview-position" aria-live="polite"></span>
-              <button type="button" id="preview-next" class="icon-btn glass" aria-label="下一张预览"><span data-icon="right"></span></button>
+              <button type="button" id="preview-next" class="icon-btn glass" aria-label="下一張預覽"><span data-icon="right"></span></button>
             </div>
           </section>
         </section>
@@ -72,76 +70,76 @@
 
     <section class="resource-section frame" id="resources" aria-labelledby="resources-title">
       <div class="section-heading">
-        <div class="heading-with-count"><h2 id="resources-title">全部资源</h2><span id="resource-count" class="resource-count" aria-live="polite"></span></div>
-        <div class="segmented glass view-toggle" aria-label="资源显示方式">
-          <button type="button" data-view="grid" aria-label="网格视图" title="网格视图"><span data-icon="grid"></span></button>
-          <button type="button" data-view="list" aria-label="列表视图" title="列表视图"><span data-icon="list"></span></button>
+        <div class="heading-with-count"><h2 id="resources-title">全部資源</h2><span id="resource-count" class="resource-count" aria-live="polite"></span></div>
+        <div class="segmented glass view-toggle" aria-label="資源顯示方式">
+          <button type="button" data-view="grid" aria-label="網格視圖" title="網格視圖"><span data-icon="grid"></span></button>
+          <button type="button" data-view="list" aria-label="列表視圖" title="列表視圖"><span data-icon="list"></span></button>
         </div>
       </div>
       <div class="resource-controls">
-        <div class="filters" id="filters" aria-label="资源分类"></div>
-        <button type="button" class="button outline quick-add" data-add><span data-icon="plus"></span>添加网站</button>
+        <div class="filters" id="filters" aria-label="資源分類"></div>
+        <button type="button" class="button outline quick-add" data-add><span data-icon="plus"></span>添加網站</button>
       </div>
       <div class="resource-grid" id="resource-grid"></div>
     </section>
-    <footer class="footer frame"><span>形迹<span class="footer-divider"></span>设计灵感库</span><a href="#main">回到顶部 <span data-icon="up"></span></a></footer>
+    <footer class="footer frame"><span>形跡<span class="footer-divider"></span>設計靈感庫</span><a href="#main">回到頂部 <span data-icon="up"></span></a></footer>
   </main>
 
   <dialog class="modal" id="site-dialog" aria-labelledby="site-dialog-title">
     <form id="site-form">
-      <div class="modal-heading"><h2 id="site-dialog-title">添加网站</h2><button type="button" class="icon-btn quiet" data-close aria-label="关闭"><span data-icon="close"></span></button></div>
-      <label class="field">网站名称<input name="name" maxlength="65" required placeholder="例如 Typewolf"></label>
-      <label class="field">网址<input name="url" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="2048" required placeholder="https://example.com"></label>
-      <label class="field">分类<select name="category" id="site-category"></select></label>
-      <label class="field">简介 <span class="optional">可选</span><textarea name="description" maxlength="100" rows="2" placeholder="记下值得回访的理由"></textarea></label>
-      <label class="field">预览图片网址 <span class="optional">可选</span><input name="preview" inputmode="url" maxlength="2048" autocomplete="off" spellcheck="false" placeholder="https://example.com/preview.jpg"></label>
+      <div class="modal-heading"><h2 id="site-dialog-title">添加網站</h2><button type="button" class="icon-btn quiet" data-close aria-label="關閉"><span data-icon="close"></span></button></div>
+      <label class="field">網站名稱<input name="name" maxlength="65" required placeholder="例如 Typewolf"></label>
+      <label class="field">網址<input name="url" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="2048" required placeholder="https://example.com"></label>
+      <label class="field">分類<select name="category" id="site-category"></select></label>
+      <label class="field">簡介 <span class="optional">可選</span><textarea name="description" maxlength="100" rows="2" placeholder="記下值得回訪的理由"></textarea></label>
+      <label class="field">預覽圖片網址 <span class="optional">可選</span><input name="preview" inputmode="url" maxlength="2048" autocomplete="off" spellcheck="false" placeholder="https://example.com/preview.jpg"></label>
       <p class="form-error" id="site-error" role="alert" hidden></p>
-      <div class="dialog-actions"><button type="button" class="button outline" data-close>取消</button><button type="submit" class="button primary">保存网站</button></div>
+      <div class="dialog-actions"><button type="button" class="button outline" data-close>取消</button><button type="submit" class="button primary">保存網站</button></div>
     </form>
   </dialog>
 
-  <dialog class="modal search-modal" id="search-dialog" aria-label="搜索资源">
-    <div class="search-box"><span data-icon="search"></span><input id="search-input" type="search" autocomplete="off" placeholder="搜索名称、分类或网址…" aria-label="搜索名称、分类或网址"><button type="button" class="icon-btn quiet" data-close aria-label="关闭搜索"><span data-icon="close"></span></button></div>
+  <dialog class="modal search-modal" id="search-dialog" aria-label="搜索資源">
+    <div class="search-box"><span data-icon="search"></span><input id="search-input" type="search" autocomplete="off" placeholder="搜索名稱、分類或網址…" aria-label="搜索名稱、分類或網址"><button type="button" class="icon-btn quiet" data-close aria-label="關閉搜索"><span data-icon="close"></span></button></div>
     <div class="search-results" id="search-results" aria-live="polite"></div>
   </dialog>
 
   <dialog class="modal" id="settings-dialog" aria-labelledby="settings-title">
-    <div class="modal-heading"><h2 id="settings-title">偏好设置</h2><button type="button" class="icon-btn quiet" data-close aria-label="关闭"><span data-icon="close"></span></button></div>
+    <div class="modal-heading"><h2 id="settings-title">偏好設置</h2><button type="button" class="icon-btn quiet" data-close aria-label="關閉"><span data-icon="close"></span></button></div>
     <form id="settings-form">
       <fieldset>
-        <legend>外观</legend>
+        <legend>外觀</legend>
         <div class="segmented glass setting-options">
-          <label><input type="radio" name="theme" value="light"><span>浅色</span></label>
+          <label><input type="radio" name="theme" value="light"><span>淺色</span></label>
           <label><input type="radio" name="theme" value="dark"><span>深色</span></label>
-          <label><input type="radio" name="theme" value="system"><span>跟随系统</span></label>
+          <label><input type="radio" name="theme" value="system"><span>跟隨系統</span></label>
         </div>
       </fieldset>
       <fieldset>
-        <legend>默认排序</legend>
+        <legend>默認排序</legend>
         <div class="segmented glass setting-options">
-          <label><input type="radio" name="sort" value="manual"><span>手动置顶</span></label>
-          <label><input type="radio" name="sort" value="alphabetical"><span>按名称</span></label>
+          <label><input type="radio" name="sort" value="manual"><span>手動置頂</span></label>
+          <label><input type="radio" name="sort" value="alphabetical"><span>按名稱</span></label>
         </div>
       </fieldset>
-      <label class="field">我的 Figma 入口 <span class="optional">可选</span><input name="figma" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="2048" placeholder="https://www.figma.com/"><small>可填入你的 Figma 文件、项目或团队链接。</small></label>
-      <a class="button outline figma-settings-link" id="figma-link" href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">打开 Figma <span data-icon="external"></span></a>
+      <label class="field">我的 Figma 入口 <span class="optional">可選</span><input name="figma" type="text" inputmode="url" spellcheck="false" autocomplete="off" maxlength="2048" placeholder="https://www.figma.com/"><small>可填入你的 Figma 文件、項目或團隊鏈接。</small></label>
+      <a class="button outline figma-settings-link" id="figma-link" href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">打開 Figma <span data-icon="external"></span></a>
       <p class="form-error" id="settings-error" role="alert" hidden></p>
       <div class="dialog-actions"><button type="button" class="button outline" data-close>取消</button><button type="submit" class="button primary">保存偏好</button></div>
     </form>
   </dialog>
 
   <dialog class="modal narrow" id="remove-dialog" aria-labelledby="remove-title">
-    <div class="modal-heading"><h2 id="remove-title">移除网站</h2><button type="button" class="icon-btn quiet" data-close aria-label="关闭"><span data-icon="close"></span></button></div>
+    <div class="modal-heading"><h2 id="remove-title">移除網站</h2><button type="button" class="icon-btn quiet" data-close aria-label="關閉"><span data-icon="close"></span></button></div>
     <p class="remove-copy" id="remove-copy"></p>
     <div class="dialog-actions"><button type="button" class="button outline" data-close>取消</button><button type="button" class="button primary" id="remove-confirm">移除</button></div>
   </dialog>
 
   <dialog class="modal narrow" id="actions-dialog" aria-labelledby="actions-title">
-    <div class="modal-heading"><h2 id="actions-title"></h2><button type="button" class="icon-btn quiet" data-close aria-label="关闭"><span data-icon="close"></span></button></div>
+    <div class="modal-heading"><h2 id="actions-title"></h2><button type="button" class="icon-btn quiet" data-close aria-label="關閉"><span data-icon="close"></span></button></div>
     <div class="site-actions">
-      <button type="button" data-site-action="edit"><span data-icon="edit"></span>编辑网站</button>
+      <button type="button" data-site-action="edit"><span data-icon="edit"></span>編輯網站</button>
       <button type="button" data-site-action="pin"><span data-icon="up"></span>移到最前</button>
-      <button type="button" data-site-action="remove"><span data-icon="trash"></span>移除网站</button>
+      <button type="button" data-site-action="remove"><span data-icon="trash"></span>移除網站</button>
     </div>
   </dialog>
   <div id="notice" class="notice glass" role="status"></div>

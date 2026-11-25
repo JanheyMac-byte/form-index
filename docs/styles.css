@@ -13,7 +13,7 @@
   --active-text: #fff;
   --hover: rgba(70,70,75,.10);
   --drop: 0 10px 28px rgba(28,28,33,.055);
-  font-family: Geist, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
   -webkit-font-smoothing: antialiased;
 }
 :root[data-theme=dark] {
@@ -84,7 +84,7 @@ svg { width: 17px; height: 17px; display: block; flex: none; }
 .outline { border-color: var(--line); background: var(--glass); }
 .outline:hover, .quiet:hover, .search-launch:hover, .settings-launch:hover { background: var(--hover); }
 .search-launch { padding: 0 10px 0 12px; color: var(--muted); height: 40px; font-size: 13px; }
-kbd { margin-left: 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--glass); padding: 2px 5px; font: 11px Geist, system-ui; }
+kbd { margin-left: 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--glass); padding: 2px 5px; font: inherit; font-size: 11px; }
 .icon-btn { width: 40px; height: 40px; padding: 0; flex: none; }
 .icon-btn.quiet { background: transparent; border: 0; color: var(--muted); }
 .icon-btn.quiet:hover { background: var(--hover); color: var(--text); }
@@ -140,7 +140,7 @@ kbd { margin-left: 8px; border: 1px solid var(--line); border-radius: 5px; backg
 .hero[data-sculpture=ready] .sculpture-render { visibility: visible; }
 .hero[data-sculpture=ready] .sculpture-poster { opacity: 0; }
 .hero-content { position: relative; z-index: 85; padding-top: clamp(30px,calc(17vh - 68px),94px); text-align: center; opacity: var(--intro-reveal); pointer-events: none; }
-.hero h1 { margin: 0 0 16px; font-size: clamp(42px,min(4.5vw,8.6vh),67px); font-weight: 750; letter-spacing: -.088em; line-height: 1.05; }
+.hero h1 { margin: 0 0 16px; font-size: clamp(42px,min(4.5vw,8.6vh),67px); font-weight: 750; letter-spacing: -.025em; line-height: 1.15; }
 .hero h1 span { color: #657446; margin-left: .07em; }
 .hero-content p { color: var(--muted); font-size: 15px; letter-spacing: .025em; }
 .hero-actions { margin-top: 24px; display: flex; justify-content: center; }

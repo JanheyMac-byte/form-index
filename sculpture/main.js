@@ -6,7 +6,7 @@ import {
 } from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { acceleratedRaycast, MeshBVH } from "three-mesh-bvh";
-import { createWater } from "./water.js";
+import { flyButterflies } from "./garden.js";
 import { lingerTime, removeVine, sproutVine, updateVine } from "./vines.js";
 
 const perspective = 800;
@@ -55,7 +55,8 @@ function porcelainLighting(scene, renderer) {
   const key = new DirectionalLight(0xfff8ee, 1.46);
   key.position.set(-380, 540, 560);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  const shadowSize = matchMedia("(max-width: 640px)").matches ? 512 : 1024;
+  key.shadow.mapSize.set(shadowSize, shadowSize);
   Object.assign(key.shadow.camera, { left: -490, right: 490, top: 490, bottom: -490, near: 40, far: 1450 });
   key.shadow.camera.updateProjectionMatrix();
   key.shadow.bias = -.00054;
@@ -72,15 +73,20 @@ function connectScrollScale(element, motionPreference) {
   const intro = element.querySelector(".hero-content");
   const orbit = element.querySelector(".orbit-scene");
   const header = document.querySelector(".top");
-  const zoom = { factor: .5, reveal: 0, onChange: null };
   let frame = 0;
   let entryPhase = -1;
+  let target = 0;
+  let progress = 0;
+  let lastTime = 0;
 
-  function update() {
+  function update(time) {
     frame = 0;
-    const distance = orbitAnchor.offsetTop;
-    const moved = header.offsetHeight - track.getBoundingClientRect().top;
-    const progress = distance > 0 ? MathUtils.clamp(moved / distance, 0, 1) : 0;
+    const elapsed = lastTime ? Math.min(60, time - lastTime) : 16;
+    progress += (target - progress) * (1 - Math.exp(-elapsed / 64));
+    if (Math.abs(target - progress) < .0006 || motionPreference.matches) progress = target;
+    lastTime = time;
+    if (progress !== target) frame = requestAnimationFrame(update);
+    else lastTime = 0;
     const reduced = motionPreference.matches;
     const introReveal = orbit.hidden ? 1 : reduced ? Number(progress < .72) : 1 - MathUtils.smoothstep(progress, .29, .62);
     const orbitReveal = orbit.hidden ? 0 : reduced ? Number(progress >= .72) : MathUtils.smoothstep(progress, .50, .92);
@@ -93,15 +99,17 @@ function connectScrollScale(element, motionPreference) {
       entryPhase = phase;
       orbit.dispatchEvent(new CustomEvent("orbit-scroll", { detail: phase }));
     }
-    const factor = .5 + .5 * (reduced ? Number(progress >= .72) : progress);
-    if (factor === zoom.factor && orbitReveal === zoom.reveal) return;
-    zoom.factor = factor;
-    zoom.reveal = orbitReveal;
+    const glide = reduced ? orbitReveal : MathUtils.smoothstep(progress, .08, .76);
+    element.style.setProperty("--sculpture-glide", String(glide));
+    const factor = .72 + .28 * (reduced ? orbitReveal : MathUtils.smoothstep(progress, 0, 1));
     element.style.setProperty("--sculpture-zoom", String(factor));
-    zoom.onChange?.();
   }
 
   function requestUpdate() {
+    const distance = orbitAnchor.offsetTop;
+    if (!track.offsetHeight) return;
+    target = distance && !orbit.hidden
+      ? MathUtils.clamp((header.offsetHeight - track.getBoundingClientRect().top) / distance, 0, 1) : 0;
     if (!frame) frame = requestAnimationFrame(update);
   }
 
@@ -110,21 +118,20 @@ function connectScrollScale(element, motionPreference) {
   const observer = new ResizeObserver(requestUpdate);
   observer.observe(track);
   observer.observe(header);
-  update();
-  return zoom;
+  requestUpdate();
 }
 
 async function mountSculpture(element) {
   const canvas = element.querySelector(".sculpture-render");
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-  const zoom = connectScrollScale(element, motionPreference);
-  const water = createWater(element.querySelector(".hero-water"), motionPreference);
+  connectScrollScale(element, motionPreference);
   const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
   renderer.setClearColor(0xffffff, 0);
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.21;
   renderer.shadowMap.enabled = true;
+  renderer.shadowMap.autoUpdate = false;
   renderer.shadowMap.type = PCFSoftShadowMap;
 
   const geometry = await readGeometry(element.dataset.model);
@@ -170,33 +177,20 @@ async function mountSculpture(element) {
     const height = element.clientHeight;
     if (!width || !height || (width === layout?.width && height === layout.height)) return;
     const compact = width <= 640;
-    const fullScale = Math.min(width * (compact ? .407 : .31), height * (compact ? .29 : .375), 375);
-    const center = height * (compact ? .598 - .06 * zoom.reveal : .516);
-    const scale = fullScale * zoom.factor;
-    layout = { width, height, center, fullScale, scale };
+    const scale = Math.min(width * (compact ? .407 : .31), height * (compact ? .29 : .375), 375);
+    const center = height * (compact ? .598 : .516);
+    layout = { width, height, center, scale };
     pivot.position.y = height / 2 - center;
     pivot.scale.setScalar(scale);
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.55));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, compact ? 1.25 : 1.5));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.fov = MathUtils.radToDeg(2 * Math.atan(height / (2 * perspective)));
     camera.updateProjectionMatrix();
     scene.updateMatrixWorld(true);
-    water.resize(width, height);
     sceneDirty = true;
     schedule();
   }
-
-  zoom.onChange = () => {
-    if (!layout) return;
-    layout.scale = layout.fullScale * zoom.factor;
-    layout.center = layout.height * (layout.width <= 640 ? .598 - .06 * zoom.reveal : .516);
-    pivot.position.y = layout.height / 2 - layout.center;
-    pivot.scale.setScalar(layout.scale);
-    scene.updateMatrixWorld(true);
-    sceneDirty = true;
-    schedule();
-  };
 
   function surfaceAt(x, y) {
     ndc.set(2 * x / layout.width - 1, 1 - 2 * y / layout.height);
@@ -204,9 +198,17 @@ async function mountSculpture(element) {
     return raycaster.intersectObject(sculpture, false)[0];
   }
 
+  function localPointer(clientX, clientY) {
+    const bounds = canvas.getBoundingClientRect();
+    return {
+      x: (clientX - bounds.left) * layout.width / bounds.width,
+      y: (clientY - bounds.top) * layout.height / bounds.height
+    };
+  }
+
   function surfaceAtClient(clientX, clientY) {
-    const bounds = element.getBoundingClientRect();
-    return surfaceAt(clientX - bounds.left, clientY - bounds.top);
+    const { x, y } = localPointer(clientX, clientY);
+    return surfaceAt(x, y);
   }
 
   canvas.addEventListener("sculpture-hit-test", event => {
@@ -230,9 +232,7 @@ async function mountSculpture(element) {
       leave();
       return;
     }
-    const bounds = element.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const y = event.clientY - bounds.top;
+    const { x, y } = localPointer(event.clientX, event.clientY);
     const now = performance.now();
     if (!pointer || Math.hypot(pointer.anchorX - x, pointer.anchorY - y) > dwellRadius) {
       stopGrowing(now);
@@ -241,7 +241,6 @@ async function mountSculpture(element) {
       pointer.x = x;
       pointer.y = y;
     }
-    if (!motionPreference.matches && !surfaceAt(x, y)) water.release(x, y, now);
     schedule();
   }
 
@@ -265,7 +264,7 @@ async function mountSculpture(element) {
       const x = (pointer.x - layout.width / 2) / (layout.scale * 1.02);
       const y = (pointer.y - layout.center) / (layout.scale * .85);
       const limit = tiltLimit / Math.max(1, Math.hypot(x, y));
-      const smoothing = 1 - Math.exp(-elapsed / 72);
+      const smoothing = 1 - Math.exp(-elapsed / 105);
       rotation.x += (-y * limit - rotation.x) * smoothing;
       rotation.y += (x * limit - rotation.y) * smoothing;
       returning = null;
@@ -295,10 +294,10 @@ async function mountSculpture(element) {
     const hovered = Boolean(pointer && time - lastHit < 70);
     const beforeX = pivot.rotation.x, beforeY = pivot.rotation.y;
     const tilting = moveSculpture(time, elapsed, hovered);
-    scene.updateMatrixWorld(true);
+    if (beforeX !== pivot.rotation.x || beforeY !== pivot.rotation.y) pivot.updateMatrixWorld(true);
 
     if (pointer && !hovered && activeVine) stopGrowing(time);
-    if (pointer && !activeVine && hit && time - pointer.from >= sproutDelay) {
+    if (!motionPreference.matches && pointer && !activeVine && hit && time - pointer.from >= sproutDelay) {
       const preciseHit = surfaceAt(pointer.x, pointer.y);
       if (preciseHit) {
         const root = pivot.worldToLocal(preciseHit.point.clone());
@@ -310,9 +309,11 @@ async function mountSculpture(element) {
     }
 
     let plantsMoving = false;
+    let insectsMoving = false;
     let wakeAt = Infinity;
     for (let index = vines.length - 1; index >= 0; index--) {
       const vine = vines[index];
+      insectsMoving = flyButterflies(vine, time) || insectsMoving;
       if (vine.pause !== null && time < vine.pause + lingerTime) {
         wakeAt = Math.min(wakeAt, vine.pause + lingerTime);
         continue;
@@ -326,14 +327,17 @@ async function mountSculpture(element) {
         plantsMoving = true;
       }
     }
-    water.draw(time);
-    if (sceneDirty || beforeX !== pivot.rotation.x || beforeY !== pivot.rotation.y) {
+    const geometryMoved = sceneDirty || beforeX !== pivot.rotation.x || beforeY !== pivot.rotation.y;
+    if (geometryMoved || insectsMoving) {
+      renderer.shadowMap.needsUpdate = geometryMoved;
       renderer.render(scene, camera);
       element.dataset.sculpture = "ready";
       sceneDirty = false;
     }
-    if (tilting || plantsMoving || water.active || (hovered && !activeVine) || (wasHovering && !hit)) {
+    if (tilting || plantsMoving || (hovered && !activeVine && !motionPreference.matches) || (wasHovering && !hit)) {
       schedule();
+    } else if (insectsMoving) {
+      wakeTimer = setTimeout(schedule, 22);
     } else if (Number.isFinite(wakeAt)) {
       wakeTimer = setTimeout(schedule, Math.max(0, wakeAt - performance.now()));
     }
@@ -351,7 +355,13 @@ async function mountSculpture(element) {
   element.addEventListener("pointerleave", leave);
   element.addEventListener("pointercancel", leave);
   window.addEventListener("scroll", leave, { passive: true });
-  motionPreference.addEventListener("change", schedule);
+  motionPreference.addEventListener("change", () => {
+    leave();
+    if (motionPreference.matches) {
+      for (const vine of vines.splice(0)) removeVine(vine);
+      sceneDirty = true;
+    }
+  });
   canvas.addEventListener("webglcontextlost", event => {
     event.preventDefault();
     lost = true;

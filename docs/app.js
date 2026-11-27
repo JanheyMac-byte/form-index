@@ -1,49 +1,48 @@
 "use strict";
 
 const categories = {
-  visual: "視覺靈感",
-  graphic: "平面與品牌",
+  visual: "视觉灵感",
+  graphic: "平面与品牌",
   ux: "UI/UX",
-  web: "網頁設計",
-  aesthetic: "審美網頁",
-  type: "字體與排版",
+  web: "网页设计",
+  aesthetic: "审美网页",
+  type: "字体与排版",
   other: "其他"
 };
 
 const makeSite = ([id, name, url, category, description, mark]) => ({ id, name, url, category, description, mark });
 const featuredSites = [
-  ["pinterest","Pinterest","https://ca.pinterest.com/","visual","蒐集圖片參考，整理自己的靈感板。","P"],
-  ["museum","Museum Department","https://museumdepartment.com/","graphic","瀏覽當代平面設計與字體項目。","M"],
-  ["figma","Figma Community","https://www.figma.com/community","ux","查找 UI 套件、設計系統和插件。","F"],
-  ["mobbin","Mobbin","https://mobbin.com/","ux","參考真實產品的界面與用戶流程。","M"],
-  ["awwwards","Awwwards","https://www.awwwards.com/","web","發現互動體驗與網頁設計案例。","A."],
-  ["siteinspire","Siteinspire","https://www.siteinspire.com/","web","按風格、類型和主題尋找網站參考。","Si"],
-  ["fonts","Fonts In Use","https://fontsinuse.com/","type","研究字體在真實作品中的用法與搭配。","Aa"],
-  ["arena","Are.na","https://www.are.na/","visual","通過主題頻道探索圖像、文本和研究素材。","A"],
-  ["behance","Behance","https://www.behance.net/","graphic","瀏覽品牌、平面和編輯設計項目。","Bē"]
+  ["pinterest","Pinterest","https://ca.pinterest.com/","visual","搜集图片参考，整理自己的灵感板。","P"],
+  ["museum","Museum Department","https://museumdepartment.com/","graphic","浏览当代平面设计与字体项目。","M"],
+  ["figma","Figma Community","https://www.figma.com/community","ux","查找 UI 套件、设计系统和插件。","F"],
+  ["mobbin","Mobbin","https://mobbin.com/","ux","参考真实产品的界面与用户流程。","M"],
+  ["awwwards","Awwwards","https://www.awwwards.com/","web","发现互动体验与网页设计案例。","A."],
+  ["siteinspire","Siteinspire","https://www.siteinspire.com/","web","按风格、类型和主题寻找网站参考。","Si"],
+  ["fonts","Fonts In Use","https://fontsinuse.com/","type","研究字体在真实作品中的用法与搭配。","Aa"],
+  ["arena","Are.na","https://www.are.na/","visual","通过主题频道探索图像、文本和研究素材。","A"],
+  ["behance","Behance","https://www.behance.net/","graphic","浏览品牌、平面和编辑设计项目。","Bē"]
 ].map(makeSite);
 const aestheticSites = [
-  ["ordinary-people","Ordinary People","https://ordinarypeople.info/work","aesthetic","看韓國設計工作室如何用大膽排版、影像和動效呈現品牌項目。","OP"],
-  ["studio-dumbar","Studio Dumbar","https://studiodumbar.com/work","aesthetic","參考以動態字體、色彩和編排呈現視覺識別作品的項目索引。","SD"],
-  ["eames-institute","Eames Institute","https://www.eamesinstitute.org/collection/","aesthetic","參考設計檔案的產品攝影、留白和藏品編排。","EI"],
-  ["koto","Koto","https://koto.com/","aesthetic","參考大字號排版、明快配色和品牌案例的圖文節奏。","K"]
+  ["ordinary-people","Ordinary People","https://ordinarypeople.info/work","aesthetic","看韩国设计工作室如何用大胆排版、影像和动效呈现品牌项目。","OP"],
+  ["studio-dumbar","Studio Dumbar","https://studiodumbar.com/work","aesthetic","参考以动态字体、色彩和编排呈现视觉识别作品的项目索引。","SD"],
+  ["eames-institute","Eames Institute","https://www.eamesinstitute.org/collection/","aesthetic","参考设计档案的产品摄影、留白和藏品编排。","EI"],
+  ["koto","Koto","https://koto.com/","aesthetic","参考大字号排版、明快配色和品牌案例的图文节奏。","K"]
 ].map(makeSite);
 const seed = [...featuredSites, ...aestheticSites];
-const aestheticIds = new Set(aestheticSites.map(site => site.id));
 const legacyDescriptions = {
-  "pinterest": "搜集图片参考，整理自己的灵感板。",
-  "museum": "浏览当代平面设计与字体项目。",
-  "figma": "查找 UI 套件、设计系统和插件。",
-  "mobbin": "参考真实产品的界面与用户流程。",
-  "awwwards": "发现互动体验与网页设计案例。",
-  "siteinspire": "按风格、类型和主题寻找网站参考。",
-  "fonts": "研究字体在真实作品中的用法与搭配。",
-  "arena": "通过主题频道探索图像、文本和研究素材。",
-  "behance": "浏览品牌、平面和编辑设计项目。",
-  "ordinary-people": "看韩国设计工作室如何用大胆排版、影像和动效呈现品牌项目。",
-  "studio-dumbar": "参考以动态字体、色彩和编排呈现视觉识别作品的项目索引。",
-  "eames-institute": "参考设计档案的产品摄影、留白和藏品编排。",
-  "koto": "参考大字号排版、明快配色和品牌案例的图文节奏。"
+  "pinterest": "蒐集圖片參考，整理自己的靈感板。",
+  "museum": "瀏覽當代平面設計與字體項目。",
+  "figma": "查找 UI 套件、設計系統和插件。",
+  "mobbin": "參考真實產品的界面與用戶流程。",
+  "awwwards": "發現互動體驗與網頁設計案例。",
+  "siteinspire": "按風格、類型和主題尋找網站參考。",
+  "fonts": "研究字體在真實作品中的用法與搭配。",
+  "arena": "通過主題頻道探索圖像、文本和研究素材。",
+  "behance": "瀏覽品牌、平面和編輯設計項目。",
+  "ordinary-people": "看韓國設計工作室如何用大膽排版、影像和動效呈現品牌項目。",
+  "studio-dumbar": "參考以動態字體、色彩和編排呈現視覺識別作品的項目索引。",
+  "eames-institute": "參考設計檔案的產品攝影、留白和藏品編排。",
+  "koto": "參考大字號排版、明快配色和品牌案例的圖文節奏。"
 };
 
 const icons = {
@@ -120,12 +119,12 @@ function readState() {
 let state = readState();
 let page = "discover";
 let category = "all";
+const locations = { discover: { category, y: 0 }, saved: { category, y: 0 } };
 let editingId = null;
 let removingId = null;
 let actionId = null;
 let noticeTimer;
 let previewId = "museum";
-let previewQueue = [];
 let previewDeck = [];
 let orbitPosition = 0;
 let orbitFrame = 0;
@@ -139,7 +138,6 @@ let idleAfter = 0;
 let hoverId = null;
 let orbitPointer = null;
 const previewNodes = new Map();
-let previewFavorites = "";
 let previewDrag = null;
 let suppressPreviewClick = false;
 let previewTilt = null;
@@ -163,7 +161,7 @@ function update(next, message) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
   } catch {
-    message = "此瀏覽器無法保存，變更僅在當前頁面生效。";
+    message = "此浏览器无法保存，变更仅在当前页面生效。";
   }
   render();
   if (message) notify(message);
@@ -217,7 +215,7 @@ function previewCard(site) {
   return '<article class="preview-slide" data-preview-id="' + escapeText(site.id) +
     '" aria-label="' + escapeText(site.name) + '"><div class="preview-card-shell"><div class="preview-card">' +
     '<a class="preview-picture' + (site.id === "museum" ? " is-museum" : "") + '" ' + openLink(site) +
-    ' aria-label="打開 ' + escapeText(site.name) + '"><span class="preview-blockmark" aria-hidden="true">' + escapeText(mark) +
+    ' aria-label="打开 ' + escapeText(site.name) + '"><span class="preview-blockmark" aria-hidden="true">' + escapeText(mark) +
     '</span>' + image + '</a>' +
     '<div class="preview-body"><h3><a ' + openLink(site) + '>' + escapeText(site.name) + '</a></h3>' +
     '<p>' + escapeText(domain(site.url)) + ' · ' + categories[site.category] + '</p></div>' +
@@ -390,7 +388,8 @@ function paintOrbit() {
     node.style.setProperty("--preview-hover-scale", Math.max(1, Math.min(1.085, (centerScale - .012) / scale)).toFixed(3));
     const nearSide = smoothRange(depth, -.3, .2);
     node.style.setProperty("--preview-brightness", mix(.93, 1, nearSide).toFixed(3));
-    node.style.setProperty("--orbit-card-opacity", (opacity * mix(.73, 1, nearSide)).toFixed(3));
+    const seamFade = previewDeck.length > count ? smoothRange(1 - Math.abs(slot) * 2 / count, 0, .14) : 1;
+    node.style.setProperty("--orbit-card-opacity", (opacity * mix(.73, 1, nearSide) * seamFade).toFixed(3));
     node.style.setProperty("--preview-rim-opacity", smoothRange(depth, .65, .98).toFixed(3));
     node.style.zIndex = String(front ? 42 + Math.round(depth * 19) : 15 + Math.round((depth + 1) * 13));
     if (node.hasAttribute("data-rear") === front) {
@@ -399,7 +398,7 @@ function paintOrbit() {
     }
     if (node.getAttribute("aria-current") !== String(active)) {
       node.setAttribute("aria-current", String(active));
-      node.querySelector(".preview-picture").setAttribute("aria-label", (active ? "打開 " : "移到星環前方 ") + site.name);
+      node.querySelector(".preview-picture").setAttribute("aria-label", (active ? "打开 " : "移到星环前方 ") + site.name);
     }
     node.toggleAttribute("data-orbit-hover", !active && site.id === hoverId);
     visible.add(site.id);
@@ -436,7 +435,7 @@ function refreshOrbitHover() {
 
 function animateIdleOrbit(time) {
   idleFrame = 0;
-  if (!orbitInView || orbitScene.hidden || orbitPhase < 1 || document.hidden || reduceMotion.matches || previewDeck.length < 2) {
+  if (!orbitInView || !orbitLayout || orbitScene.hidden || orbitPhase < 1 || document.hidden || reduceMotion.matches || previewDeck.length < 2) {
     idleTime = 0;
     idleRamp = 0;
     return;
@@ -444,7 +443,7 @@ function animateIdleOrbit(time) {
   const paused = hoverId || previewDrag || orbitFrame || time < idleAfter
     || orbitScene.querySelector(":focus-visible") || $(".preview-controls:hover") || $("dialog[open]");
   if (!paused && idleTime) {
-    const elapsed = time - idleTime;
+    const elapsed = Math.min(50, time - idleTime);
     const rampTime = 650;
     const warming = Math.min(elapsed, rampTime - idleRamp);
     const rotationalTime = elapsed - warming + warming * (idleRamp + warming / 2) / rampTime;
@@ -468,27 +467,21 @@ function wakeIdleOrbit() {
 }
 
 function updatePreviewControls() {
-  const index = previewQueue.findIndex(site => site.id === previewId);
-  $("#preview-prev").disabled = previewQueue.length < 2;
-  $("#preview-next").disabled = previewQueue.length < 2;
+  const index = previewDeck.findIndex(site => site.id === previewId);
+  $("#preview-prev").disabled = previewDeck.length < 2;
+  $("#preview-next").disabled = previewDeck.length < 2;
   const position = $("#preview-position");
   if (index < 0) {
     position.textContent = "";
     position.removeAttribute("aria-label");
     return;
   }
-  position.textContent = String(index + 1).padStart(2, "0") + " / " + String(previewQueue.length).padStart(2, "0");
-  position.setAttribute("aria-label", previewQueue[index].name + "，第 " + (index + 1) + " 張，共 " + previewQueue.length + " 張");
-}
-
-function releaseQueuedPreviews() {
-  if (previewQueue.length === previewDeck.length) return;
-  const current = previewDeck[ringIndex(Math.round(orbitPosition), previewDeck.length)]?.id;
-  previewDeck = previewQueue;
-  orbitPosition = Math.max(0, previewDeck.findIndex(site => site.id === current));
+  position.innerHTML = '<span class="preview-current-name">' + escapeText(previewDeck[index].name) + '</span>' + String(index + 1).padStart(2, "0") + " / " + String(previewDeck.length).padStart(2, "0");
+  position.setAttribute("aria-label", previewDeck[index].name + "，第 " + (index + 1) + " 张，共 " + previewDeck.length + " 张");
 }
 
 function settleOrbit(target) {
+  if (!previewDeck.length) return;
   idleAfter = performance.now() + 1250;
   cancelAnimationFrame(orbitFrame);
   orbitFrame = 0;
@@ -512,7 +505,6 @@ function settleOrbit(target) {
 }
 
 function selectPreview(id) {
-  releaseQueuedPreviews();
   const index = previewDeck.findIndex(site => site.id === id);
   if (index < 0) return;
   const length = previewDeck.length;
@@ -522,56 +514,73 @@ function selectPreview(id) {
 }
 
 function stepPreview(direction) {
-  if (!previewQueue.length) return;
-  const index = previewQueue.findIndex(site => site.id === previewId);
-  const next = previewQueue[ringIndex(index + direction, previewQueue.length)];
+  if (!previewDeck.length) return;
+  const index = previewDeck.findIndex(site => site.id === previewId);
+  const next = previewDeck[ringIndex(index + direction, previewDeck.length)];
   if (next) selectPreview(next.id);
 }
 
 function renderPreview() {
   const byId = new Map(state.sites.map(site => [site.id, site]));
-  const initialIds = new Set(seed.map(site => site.id));
-  previewQueue = [
-    ...seed.map(site => byId.get(site.id)).filter(Boolean),
-    ...state.sites.filter(site => !initialIds.has(site.id)).reverse()
-  ];
-  orbitScene.hidden = !previewQueue.length;
-  $("#sculpture-scene").parentElement.classList.toggle("no-orbit", orbitScene.hidden);
-  $(".hero-primary").href = orbitScene.hidden ? "#resources" : "#preview-section";
+  const oldCenter = Math.round(orbitPosition);
+  const anchor = previewDeck.length ? previewDeck[ringIndex(oldCenter, previewDeck.length)].id : previewId;
   const survivors = previewDeck.map(site => byId.get(site.id)).filter(Boolean);
-  const filtered = previewDeck.length !== survivors.length;
-  let nextDeck = filtered ? previewQueue : survivors;
-  if (!nextDeck.length) {
-    const firstDeck = previewQueue.filter(site => !aestheticIds.has(site.id));
-    nextDeck = firstDeck.length ? firstDeck : previewQueue;
-  }
-  const favoritesKey = JSON.stringify(state.favorites);
-  const needsRefresh = filtered || nextDeck.length !== previewDeck.length
-    || nextDeck.some((site, index) => site !== previewDeck[index])
-    || previewFavorites !== favoritesKey;
+  const known = new Set(survivors.map(site => site.id));
+  const added = state.sites.filter(site => !known.has(site.id));
+  const membershipChanged = added.length || survivors.length !== previewDeck.length;
 
-  if (needsRefresh) {
-    resetPreviewTilt();
+  if (membershipChanged) {
     cancelAnimationFrame(orbitFrame);
     orbitFrame = 0;
-    previewDeck = nextDeck;
-    orbitPosition = Math.max(0, previewDeck.findIndex(site => site.id === previewId));
-    previewId = previewDeck[orbitPosition]?.id ?? "";
-    previewFavorites = favoritesKey;
-    previewNodes.clear();
-    previewTrack.replaceChildren();
+    if (survivors.length) {
+      // Add beyond the last visible slot and preserve the fractional angle at the front.
+      const center = Math.max(0, survivors.findIndex(site => site.id === anchor));
+      const slots = Math.min(orbitLayout?.slots ?? 9, survivors.length);
+      const insertion = ringIndex(center + Math.floor(slots / 2) + 1, survivors.length);
+      survivors.splice(insertion, 0, ...added);
+    } else {
+      const presets = new Set(seed.map(site => site.id));
+      survivors.push(...seed.map(site => byId.get(site.id)).filter(Boolean),
+        ...added.filter(site => !presets.has(site.id)).reverse());
+    }
+    const center = Math.max(0, survivors.findIndex(site => site.id === anchor));
+    orbitPosition = center + (orbitPosition - oldCenter);
+    previewId = survivors[center]?.id ?? "";
+    if (previewDrag) previewDrag.start += center - oldCenter;
   }
-
+  for (const site of previewDeck) {
+    const node = previewNodes.get(site.id);
+    if (node && byId.get(site.id) !== site) {
+      if (previewTilt?.shell === node.firstElementChild) resetPreviewTilt();
+      node.remove();
+      previewNodes.delete(site.id);
+    }
+  }
+  previewDeck = survivors;
+  orbitScene.hidden = !previewDeck.length;
+  $("#sculpture-scene").parentElement.classList.toggle("no-orbit", orbitScene.hidden);
+  $(".hero-primary").href = orbitScene.hidden ? "#resources" : "#preview-section";
+  $(".hero-primary").firstChild.textContent = orbitScene.hidden ? "浏览资源 " : "浏览星环 ";
+  $(".hero-index-link").hidden = orbitScene.hidden;
   updatePreviewControls();
-  measureOrbit();
-  refreshOrbitHover();
+  if (orbitLayout) paintOrbit();
+  else measureOrbit();
+  for (const [id, node] of previewNodes) {
+    const button = node.querySelector("[data-save]");
+    const saved = state.favorites.includes(id);
+    if (button.getAttribute("aria-pressed") === String(saved)) continue;
+    const label = (saved ? "取消收藏 " : "收藏 ") + byId.get(id).name;
+    button.setAttribute("aria-pressed", String(saved));
+    button.setAttribute("aria-label", label);
+    button.title = label;
+  }
   wakeIdleOrbit();
 }
 
 function resourceCard(site) {
   const label = "管理 " + site.name;
   const id = escapeText(site.id);
-  return '<article class="resource-card">' + avatar(site) +
+  return '<article class="resource-card" data-site-id="' + id + '">' + avatar(site) +
     '<a class="resource-main" ' + openLink(site) + '><h3>' + escapeText(site.name) + icon("external") +
     '</h3><span class="resource-domain">' + escapeText(domain(site.url)) + '</span></a>' +
     '<div class="resource-actions">' + saveButton(site) + '<button type="button" class="icon-btn quiet small" data-manage="' +
@@ -580,9 +589,56 @@ function resourceCard(site) {
     '<span class="eyebrow">' + categories[site.category] + '</span></div></article>';
 }
 
+const resourceGrid = $("#resource-grid");
+let lastPress = null;
+
+function pulseResource(card, x, y, elapsed = 0) {
+  if (reduceMotion.matches || elapsed > 720) return;
+  const bounds = card.getBoundingClientRect();
+  const radius = Math.hypot(Math.max(x, bounds.width - x), Math.max(y, bounds.height - y));
+  card.querySelector(".glass-wave")?.remove();
+  const wave = document.createElement("i");
+  wave.className = "glass-wave";
+  wave.setAttribute("aria-hidden", "true");
+  Object.assign(wave.style, { left: (x - radius) + "px", top: (y - radius) + "px",
+    width: radius * 2 + "px", height: radius * 2 + "px" });
+  card.append(wave);
+  const spread = wave.animate([{ transform: "scale(.015)", opacity: .95 },
+    { opacity: .75, offset: .45 }, { transform: "scale(1.2)", opacity: 0 }],
+    { duration: 720, easing: "cubic-bezier(.15,.65,.25,1)" });
+  spread.currentTime = elapsed;
+  spread.onfinish = () => wave.remove();
+  card.getAnimations().filter(a => a.id === "glass-press").forEach(a => a.cancel());
+  card.style.transformOrigin = x + "px " + y + "px";
+  const shape = card.animate([{ scale: "1" }, { scale: ".987 1.018", offset: .16 },
+    { scale: "1.008 .991", offset: .42 }, { scale: ".998 1.003", offset: .68 }, { scale: "1" }],
+    { duration: 590, easing: "ease-out", id: "glass-press" });
+  shape.currentTime = elapsed;
+}
+
+resourceGrid.addEventListener("pointerdown", event => {
+  const card = event.target.closest(".resource-card");
+  if (!card || event.button !== 0) return;
+  const bounds = card.getBoundingClientRect();
+  lastPress = { card, x: event.clientX - bounds.left, y: event.clientY - bounds.top, start: performance.now() };
+  pulseResource(card, lastPress.x, lastPress.y);
+}, { passive: true });
+resourceGrid.addEventListener("click", event => {
+  const card = event.target.closest(".resource-card");
+  if (!card) return;
+  const press = event.detail && lastPress?.card === card ? lastPress : null;
+  // A favorite action may replace the grid in the same event.
+  requestAnimationFrame(() => {
+    const current = resourceGrid.querySelector('[data-site-id="' + CSS.escape(card.dataset.siteId) + '"]');
+    if (!current) return;
+    if (!press) pulseResource(current, current.offsetWidth / 2, current.offsetHeight / 2);
+    else if (current !== card) pulseResource(current, press.x, press.y, performance.now() - press.start);
+  });
+});
+
 function orderedSites() {
   if (state.sort === "manual") return state.sites;
-  return [...state.sites].sort((left, right) => left.name.localeCompare(right.name, "zh-Hant", { sensitivity: "base" }));
+  return [...state.sites].sort((left, right) => left.name.localeCompare(right.name, "zh-Hans", { sensitivity: "base" }));
 }
 
 function applyTheme() {
@@ -668,7 +724,7 @@ function render() {
   });
 
   if (page === "discover") renderPreview();
-  $("#resources-title").textContent = page === "discover" ? "全部資源" : "我的收藏";
+  $("#resources-title").textContent = page === "discover" ? "全部资源" : "我的收藏";
   $("#filters").innerHTML = Object.entries({ all: "全部", ...categories }).map(([key, label]) =>
     '<button type="button" data-category="' + key + '" class="filter" aria-pressed="' + (category === key) + '">' + label + '</button>'
   ).join("");
@@ -676,23 +732,27 @@ function render() {
   const shown = orderedSites().filter(site =>
     (page === "discover" || state.favorites.includes(site.id)) && (category === "all" || site.category === category)
   );
-  $("#resource-count").textContent = shown.length + " 個網站";
+  $("#resource-count").textContent = shown.length + " 个网站";
   const grid = $("#resource-grid");
   grid.dataset.view = state.view;
   if (shown.length) {
     grid.innerHTML = shown.map(resourceCard).join("");
   } else if (page === "saved" && category === "all") {
-    grid.innerHTML = '<div class="empty"><p>還沒有收藏。點擊網站旁的書籤圖標即可收藏。</p><button class="button outline" type="button" data-discover>去發現資源</button></div>';
+    grid.innerHTML = '<div class="empty"><p>还没有收藏。点击网站旁的书签图标即可收藏。</p><button class="button outline" type="button" data-discover>去发现资源</button></div>';
   } else {
-    grid.innerHTML = '<div class="empty"><p>這個分類暫時沒有網站。</p></div>';
+    grid.innerHTML = '<div class="empty"><p>这个分类暂时没有网站。</p><button type="button" class="button outline" data-category="all">查看全部</button></div>';
   }
 }
 
-function showPage(nextPage) {
+function showPage(nextPage, home = false) {
+  locations[page] = { category, y: scrollY };
   page = nextPage;
-  category = "all";
+  category = home ? "all" : locations[page].category;
   render();
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: home ? 0 : locations[page].y, behavior: "instant" });
+  if (!reduceMotion.matches) {
+    $("#resource-grid").animate([{ opacity: .5 }, { opacity: 1 }], { duration: 240 });
+  }
 }
 
 function showForm(site) {
@@ -700,7 +760,7 @@ function showForm(site) {
   form.reset();
   $("#site-error").hidden = true;
   editingId = site?.id ?? null;
-  $("#site-dialog-title").textContent = site ? "編輯網站" : "添加網站";
+  $("#site-dialog-title").textContent = site ? "编辑网站" : "添加网站";
   form.elements.namedItem("category").value = site?.category ?? (category === "all" ? "visual" : category);
   for (const key of ["name", "url", "description", "preview"]) {
     form.elements.namedItem(key).value = site?.[key] ?? "";
@@ -714,10 +774,11 @@ function renderSearch() {
   const found = orderedSites().filter(site =>
     [site.name, site.url, site.description, categories[site.category]].join(" ").toLowerCase().includes(query)
   );
+  $("#search-summary").textContent = query ? "找到 " + found.length + " 个网站" : "搜索全部 " + found.length + " 个网站";
   $("#search-results").innerHTML = found.length ? found.map(site =>
     '<a class="search-result" ' + openLink(site) + '>' + avatar(site) + '<span>' + escapeText(site.name) +
     '<span class="resource-domain">' + escapeText(domain(site.url)) + '</span></span>' + icon("external") + '</a>'
-  ).join("") : '<p class="empty">沒有匹配的網站。</p>';
+  ).join("") : '<p class="empty">没有匹配的网站。</p>';
 }
 
 function showSearch() {
@@ -752,18 +813,25 @@ function setFavorite(button) {
   const selected = state.favorites.includes(id);
   const favorites = selected ? state.favorites.filter(item => item !== id) : [...state.favorites, id];
   const section = button.closest("section");
+  const previousButtons = Array.from(section.querySelectorAll("[data-save]"));
+  const index = previousButtons.indexOf(button);
   update({ favorites }, selected ? "已取消收藏" : "已收藏");
-  (section.querySelector('[data-save="' + CSS.escape(id) + '"]') || $('[data-page="' + page + '"]')).focus({ preventScroll: true });
+  const buttons = section.querySelectorAll("[data-save]");
+  const next = section.querySelector('[data-save="' + CSS.escape(id) + '"]')
+    || buttons[Math.min(index, buttons.length - 1)] || section.querySelector(".empty button");
+  next?.focus({ preventScroll: true });
 }
 
 document.addEventListener("click", event => {
   const close = event.target.closest("[data-close]");
   if (close) close.closest("dialog").close();
+  if (event.target.closest(".search-result")) $("#search-dialog").close();
   const nav = event.target.closest("button[data-page]");
   if (nav) showPage(nav.dataset.page);
   if (event.target.closest(".wordmark, [data-discover]")) {
     event.preventDefault();
-    showPage("discover");
+    showPage("discover", true);
+    if (event.target.closest("[data-discover]")) $("#resources").scrollIntoView();
   }
   const filter = event.target.closest("[data-category]");
   if (filter) {
@@ -798,7 +866,7 @@ $$("[data-site-action]").forEach(button => button.addEventListener("click", () =
       break;
     case "remove":
       removingId = site.id;
-      $("#remove-copy").textContent = "要從靈感庫移除「" + site.name + "」嗎？";
+      $("#remove-copy").textContent = "要从灵感库移除「" + site.name + "」吗？";
       $("#remove-dialog").showModal();
       break;
   }
@@ -809,7 +877,7 @@ $("#remove-confirm").addEventListener("click", () => {
   update({
     sites: state.sites.filter(site => site.id !== removingId),
     favorites: state.favorites.filter(id => id !== removingId)
-  }, "已移除網站");
+  }, "已移除网站");
   removingId = null;
 });
 
@@ -819,17 +887,17 @@ $("#site-form").addEventListener("submit", event => {
   const name = fields.get("name").trim();
   const url = normalizeUrl(fields.get("url"));
   if (!name || !url) {
-    setError("#site-error", "請填寫網站名稱和有效網址，例如 example.com。");
+    setError("#site-error", "请填写网站名称和有效网址，例如 example.com。");
     return;
   }
   const previewInput = fields.get("preview").trim();
   const preview = previewInput ? normalizeUrl(previewInput) : "";
   if (previewInput && !preview) {
-    setError("#site-error", "請填寫有效的預覽圖片網址。");
+    setError("#site-error", "请填写有效的预览图片网址。");
     return;
   }
   if (state.sites.some(site => site.url === url && site.id !== editingId)) {
-    setError("#site-error", "這個網址已經在靈感庫中。");
+    setError("#site-error", "这个网址已经在灵感库中。");
     return;
   }
   const original = state.sites.find(site => site.id === editingId);
@@ -844,10 +912,19 @@ $("#site-form").addEventListener("submit", event => {
   const sites = original ? state.sites.map(item => item.id === original.id ? site : item) : [site, ...state.sites];
   $("#site-dialog").close();
   if (!original) {
+    locations[page] = { category, y: scrollY };
     page = "discover";
-    category = "all";
+    if (category !== site.category) category = "all";
   }
-  update({ sites }, original ? "已更新網站" : "已添加網站");
+  update({ sites }, original ? "已更新网站" : "已添加「" + name + "」");
+  if (!original) {
+    const card = document.querySelector('[data-site-id="' + CSS.escape(site.id) + '"]');
+    card.querySelector(".resource-main").focus({ preventScroll: true });
+    $("#resources").scrollIntoView({ block: "start", behavior: "instant" });
+    card.scrollIntoView({ block: "nearest", behavior: "instant" });
+    if (!reduceMotion.matches) card.animate([{ outline: "2px solid var(--muted)" },
+      { outline: "2px solid transparent" }], { duration: 1600 });
+  }
 });
 
 $("#settings-form").addEventListener("submit", event => {
@@ -856,7 +933,7 @@ $("#settings-form").addEventListener("submit", event => {
   const input = fields.get("figma").trim();
   const figma = input ? normalizeUrl(input) : "";
   if (input && (!figma || domain(figma) !== "figma.com")) {
-    setError("#settings-error", "請輸入有效的 figma.com 鏈接。");
+    setError("#settings-error", "请输入有效的 figma.com 链接。");
     return;
   }
   $("#settings-dialog").close();
@@ -941,8 +1018,8 @@ previewTrack.addEventListener("keydown", event => {
   switch (event.key) {
     case "ArrowLeft": stepPreview(-1); break;
     case "ArrowRight": stepPreview(1); break;
-    case "Home": selectPreview(previewQueue[0]?.id); break;
-    case "End": selectPreview(previewQueue.at(-1)?.id); break;
+    case "Home": selectPreview(previewDeck[0]?.id); break;
+    case "End": selectPreview(previewDeck.at(-1)?.id); break;
     default: return;
   }
   event.preventDefault();
@@ -980,7 +1057,6 @@ window.addEventListener("pointermove", event => {
     if (Math.abs(difference) < 9 || Math.abs(difference) <= Math.abs(event.clientY - previewDrag.y)) return;
     cancelAnimationFrame(orbitFrame);
     orbitFrame = 0;
-    releaseQueuedPreviews();
     previewDrag.start = orbitPosition;
     previewDrag.moved = true;
     previewTrack.setPointerCapture(event.pointerId);
@@ -1003,10 +1079,13 @@ function stopPreviewDrag(event) {
 }
 window.addEventListener("pointerup", stopPreviewDrag);
 window.addEventListener("pointercancel", stopPreviewDrag);
-previewTrack.addEventListener("lostpointercapture", stopPreviewDrag);
+previewTrack.addEventListener("lostpointercapture", event => {
+  // Touch transfers implicit capture from the tapped link to the track during a swipe.
+  if (event.target === previewTrack) stopPreviewDrag(event);
+});
 
 $$("[data-icon]").forEach(node => node.innerHTML = icon(node.dataset.icon));
 $("#site-category").innerHTML = Object.entries(categories).map(([key, label]) => '<option value="' + key + '">' + label + '</option>').join("");
 $("#shortcut").textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K";
-$(".add-launch").setAttribute("aria-label", "添加網站");
+$(".add-launch").setAttribute("aria-label", "添加网站");
 render();

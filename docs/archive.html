@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>灵感存档 · 脑海</title>
+  <link rel="icon" href="./assets/favicon.png?v=brain" type="image/png">
+  <link rel="stylesheet" href="./assets/fonts/noto-serif-sc.css">
+  <link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./archive.css">
+  <script defer src="./water.js"></script>
+  <script defer src="./archive.js"></script>
+</head>
+<body class="archive-page">
+  <canvas class="site-water" aria-hidden="true"></canvas>
+  <header class="top"><div class="frame top-inner archive-header">
+    <a class="wordmark" href="./" aria-label="脑海 首页"><img class="brand-mark" src="./assets/brain-mark.svg" alt="" width="42" height="40"><span>脑海<small>MIND ATLAS</small></span></a>
+    <a class="back-link" href="./">返回灵感库</a>
+  </div></header>
+  <main class="frame archive-main">
+    <section id="gate" class="gate">
+      <div class="gate-art curtain"><div class="veil" aria-hidden="true"></div>
+        <div class="gate-copy"><h1>灵感存档</h1><p>在光幕中回看你的照片、视频和网站。</p></div>
+      </div>
+      <div class="auth-pane">
+        <h2 id="auth-title">登录存档</h2>
+        <form id="auth" hidden>
+          <label class="field" id="email-label">邮箱<input id="email" type="email" maxlength="254" autocomplete="email" required></label>
+          <label class="field" id="username-label" hidden>用户名<input id="username" type="text" maxlength="48" autocomplete="nickname" placeholder="为自己取个名字" required disabled></label>
+          <label class="field" id="password-label">密码<input id="password" type="password" maxlength="128" autocomplete="current-password" required></label>
+          <button type="submit" class="button primary" id="auth-submit">登录</button>
+        </form>
+        <button id="auth-switch" class="text-link" hidden>注册账号</button>
+        <p id="auth-status" role="status">正在连接存档服务…</p>
+      </div>
+    </section>
+
+    <section id="studio" hidden>
+      <div class="studio-heading"><div><h1 id="archive-title">我的灵感存档</h1><div class="profile-line"><span id="owner-label"></span><button id="rename" class="text-link">设置用户名</button></div></div>
+        <div class="studio-actions"><button class="button primary" id="open-add">＋ 存入灵感</button><button class="button outline" id="logout">退出登录</button></div>
+      </div>
+      <label id="owner-field" class="field" hidden>查看账号存档<select id="owner-select"></select></label>
+      <section class="gallery curtain" aria-label="存档光幕">
+        <div class="veil" aria-hidden="true"></div>
+        <div id="reel" tabindex="0" aria-label="存档光幕，左右方向键切换"><div id="strip"></div></div>
+        <div id="gallery-empty" hidden><h2>光幕等待第一份灵感</h2><p>存入照片、视频或网站，即可在这里轮播。</p></div>
+        <div class="gallery-bar"><span id="gallery-count" aria-live="polite"></span><div id="transport" hidden>
+          <button id="previous" aria-label="上一份存档">‹</button><button id="pause">暂停</button><button id="next" aria-label="下一份存档">›</button>
+        </div></div>
+      </section>
+      <p id="studio-status" role="status"></p>
+    </section>
+  </main>
+  <dialog class="modal" id="name-dialog" aria-labelledby="name-title"><form id="name-form">
+    <div class="modal-heading"><h2 id="name-title">设置用户名</h2><button type="button" class="icon-btn quiet close" aria-label="关闭">×</button></div>
+    <label class="field">用户名<input id="new-username" type="text" maxlength="48" autocomplete="nickname" required><small>可使用 1 至 24 个字符。</small></label>
+    <p id="name-status" role="status"></p><div class="dialog-actions"><button class="button primary" type="submit">保存用户名</button></div>
+  </form></dialog>
+  <dialog class="modal" id="add-dialog" aria-labelledby="add-title"><form id="add-form">
+    <div class="modal-heading"><h2 id="add-title">存入灵感</h2><button type="button" class="icon-btn quiet close" aria-label="关闭">×</button></div>
+    <label class="field">类型<select id="kind"><option value="file">照片或视频</option><option value="website">网站</option></select></label>
+    <label class="field" id="file-field">选择文件<input type="file" id="file" required accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"><small>JPG、PNG、WebP、GIF、MP4 或 WebM，单个文件最大 100 MB。</small></label>
+    <label class="field" id="url-field" hidden>网址<input type="url" id="url" placeholder="https://example.com" maxlength="2048"></label>
+    <label class="field">标题 <span class="optional">可选</span><input id="item-title" maxlength="120" placeholder="为这份灵感取个名字"></label>
+    <p id="add-status" role="status"></p><div class="dialog-actions"><button class="button primary" type="submit">保存到存档</button></div>
+  </form></dialog>
+  <dialog class="modal viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="modal-heading"><h2 id="viewer-title"></h2><button type="button" class="icon-btn quiet close" aria-label="关闭">×</button></div>
+    <div id="viewer-body"></div>
+    <div class="dialog-actions" id="remove-actions"><button class="button outline" id="remove">移除存档</button></div>
+    <div id="remove-check" hidden><p>确定从你的存档中移除这份灵感？</p><div class="dialog-actions"><button class="button outline" id="keep">保留</button><button class="button primary" id="confirm-remove">确认移除</button></div></div>
+    <p id="viewer-status" role="status"></p>
+  </dialog>
+</body></html>

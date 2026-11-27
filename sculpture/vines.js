@@ -2,12 +2,13 @@ import {
   BufferAttribute, BufferGeometry, CanvasTexture, CatmullRomCurve3, DoubleSide, Group, Mesh,
   MeshPhysicalMaterial, Ray, SRGBColorSpace, TubeGeometry, Vector3
 } from "three";
+import { growGarden, plantGarden, removeGarden } from "./garden.js";
 import { createMoss, removeMoss, updateMoss } from "./moss.js";
 
 export const lingerTime = 3000;
 const timeToGrow = 5350;
-const timeToRetract = 1440;
-const segments = 88;
+const timeToRetract = 1720;
+const segments = 128;
 const sides = 8;
 const up = new Vector3(0, 1, 0);
 const down = new Vector3(0, -1, 0);
@@ -204,8 +205,9 @@ export function sproutVine(root, normal, geometry, faceIndex, pivot, time) {
     leaves.push({ node: branch, t, size: (.098 + .046 * Math.abs(orient)) * (1 - t * .4) });
   }
 
+  const garden = plantGarden(group, root, normal, geometry, moss, seed, leafShape, leafMaterials[1]);
   pivot.add(group);
-  return { group, stem, bud, leaves, curve, moss, start: time, pause: null, progress: 0 };
+  return { group, stem, bud, leaves, curve, moss, garden, start: time, pause: null, progress: 0 };
 }
 
 export function updateVine(vine, time) {
@@ -222,6 +224,7 @@ export function updateVine(vine, time) {
   }
   const revealedSegments = Math.floor(progress * segments);
   updateMoss(vine.moss, progress);
+  growGarden(vine.garden, progress, vine.moss.reach.value);
   vine.stem.geometry.setDrawRange(0, revealedSegments * sides * 6);
   vine.bud.visible = progress > .005;
   if (vine.bud.visible) {
@@ -232,7 +235,7 @@ export function updateVine(vine, time) {
   for (const { node, t, size } of vine.leaves) {
     const growth = Math.max(0, Math.min(1, (progress - t) / .10));
     node.visible = growth > 0;
-    node.scale.setScalar(size * growth ** .64);
+    node.scale.setScalar(size * growth * growth * (3 - 2 * growth));
   }
   return true;
 }
@@ -240,5 +243,6 @@ export function updateVine(vine, time) {
 export function removeVine(vine) {
   vine.group.removeFromParent();
   vine.stem.geometry.dispose();
+  removeGarden(vine.garden);
   removeMoss(vine.moss);
 }

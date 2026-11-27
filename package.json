@@ -2,7 +2,7 @@
   "name": "form-index",
   "private": true,
   "scripts": {
-    "build": "esbuild sculpture/main.js --bundle --minify --format=iife --target=es2022 --legal-comments=eof --outfile=docs/sculpture.js"
+    "build": "esbuild sculpture/main.js --bundle --minify --format=iife --target=es2022 --legal-comments=eof --outfile=docs/sculpture.js && esbuild sculpture/water.js --minify --target=es2022 --format=iife --outfile=docs/water.js"
   },
   "dependencies": {
     "esbuild": "^0.25.12",

@@ -11,12 +11,14 @@ const greenTips = new Color("#818a48");
 
 function surfaceWithin(geometry, root, faceIndex) {
   const points = new Map();
+  const indexedPoints = new Map();
   const faces = [];
   const positions = geometry.getAttribute("position");
   const normals = geometry.getAttribute("normal");
   let start;
 
   function vertex(index) {
+    if (indexedPoints.has(index)) return indexedPoints.get(index);
     const x = positions.getX(index), y = positions.getY(index), z = positions.getZ(index);
     const key = [x, y, z].map(value => Math.round(value * 32767)).join(",");
     if (!points.has(key)) {
@@ -27,7 +29,9 @@ function surfaceWithin(geometry, root, faceIndex) {
         distance: Infinity
       });
     }
-    return points.get(key);
+    const point = points.get(key);
+    indexedPoints.set(index, point);
+    return point;
   }
 
   geometry.boundsTree.shapecast({
@@ -159,7 +163,30 @@ function frondShape() {
   return geometry;
 }
 
-function mossFronds(faces, reach, seed) {
+// Select actual fronds, with space between flower heads even on a steep fold.
+function floweringTufts(tufts, root, seed) {
+  const sites = [];
+  for (let i = 0; i < 8; i++) {
+    const angle = seed * Math.PI + i * 2.399963;
+    const span = .077 + (i % 3) * .037;
+    const x = root.x + Math.cos(angle) * span;
+    const y = root.y + Math.sin(angle) * span;
+    let best = null, bestScore = Infinity;
+    for (const tuft of tufts) {
+      if (tuft.start > .184 || tuft.normal.z < -.10) continue;
+      const dx = tuft.position.x - x, dy = tuft.position.y - y;
+      const score = dx * dx + dy * dy + Math.max(0, root.z - tuft.position.z) * .035;
+      if (score >= bestScore || sites.some(s =>
+        (s.position.x - tuft.position.x) ** 2 + (s.position.y - tuft.position.y) ** 2 < .060 ** 2)) continue;
+      best = tuft;
+      bestScore = score;
+    }
+    if (best) sites.push(best);
+  }
+  return sites;
+}
+
+function mossFronds(faces, reach, seed, root) {
   let randomState = Math.floor(seed * 0xffffffff);
   const random = () => ((randomState = (Math.imul(1664525, randomState) + 1013904223) >>> 0) / 0x100000000);
   const tufts = [];
@@ -207,20 +234,24 @@ function mossFronds(faces, reach, seed) {
   });
   plants.instanceMatrix.needsUpdate = true;
   plants.instanceColor.needsUpdate = true;
-  return plants;
+  return { plants, flowerSites: floweringTufts(tufts, root, seed) };
 }
 
 export function createMoss(geometry, root, faceIndex, seed) {
   const faces = surfaceWithin(geometry, root, faceIndex);
   const group = new Group();
   const reach = { value: 0 };
+  let flowerSites = [];
   if (faces.length) {
     group.add(mossGround(faces, reach));
-    const fronds = mossFronds(faces, reach, seed);
-    if (fronds) group.add(fronds);
+    const fronds = mossFronds(faces, reach, seed, root);
+    if (fronds) {
+      group.add(fronds.plants);
+      flowerSites = fronds.flowerSites;
+    }
   }
   group.visible = false;
-  return { group, reach };
+  return { group, reach, flowerSites };
 }
 
 export function updateMoss(moss, progress) {
